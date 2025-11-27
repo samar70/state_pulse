@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Applied `dart format` to fix pub.dev analyzer formatting warning.
+
 ## 0.0.2
 
 - Added main public API entry file (`state_pulse.dart`).

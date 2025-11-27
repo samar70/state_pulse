@@ -12,7 +12,7 @@ class StatePulseProvider<T extends ChangeNotifier>
   /// - [store]: The instance of the `ChangeNotifier` store that holds your app's state.
   /// - [child]: The widget subtree that will have access to the store.
   const StatePulseProvider({super.key, required T store, required super.child})
-    : super(notifier: store);
+      : super(notifier: store);
 
   /// A static method that allows descendant widgets to access the [store]
   /// using [BuildContext]. It searches the widget tree for the nearest
@@ -20,13 +20,9 @@ class StatePulseProvider<T extends ChangeNotifier>
   ///
   /// - Throws an error if no [StatePulseProvider] of type [T] is found in the widget tree.
   static T of<T extends ChangeNotifier>(BuildContext context) {
-    final provider =
-        context
-                .getElementForInheritedWidgetOfExactType<
-                  StatePulseProvider<T>
-                >()
-                ?.widget
-            as StatePulseProvider<T>?;
+    final provider = context
+        .getElementForInheritedWidgetOfExactType<StatePulseProvider<T>>()
+        ?.widget as StatePulseProvider<T>?;
 
     if (provider == null) {
       throw FlutterError("StoreProvider<$T> not found in widget tree");
