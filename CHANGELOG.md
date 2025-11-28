@@ -1,3 +1,15 @@
+## 0.0.4
+
+- Added: StatePulseProvider.value method for directly accessing the store without rebuilding.
+
+- Added: Local instance support for StatePulseBuilder, enabling easy usage with non-global instances of ChangeNotifier store.
+
+- Improved: StatePulseBuilder now accepts an optional local store instance, allowing greater flexibility in state management.
+
+- Fix: Improved error handling for cases where the store is not found in the widget tree.
+
+- Updated: StatePulseProvider to allow non-listening access to the store (listen: false option).
+
 ## 0.0.3
 
 - Applied `dart format` to fix pub.dev analyzer formatting warning.

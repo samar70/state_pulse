@@ -19,15 +19,46 @@ class StatePulseProvider<T extends ChangeNotifier>
   /// [StatePulseProvider] of the correct type and returns its notifier (the store).
   ///
   /// - Throws an error if no [StatePulseProvider] of type [T] is found in the widget tree.
-  static T of<T extends ChangeNotifier>(BuildContext context) {
+  static T of<T extends ChangeNotifier>(BuildContext context,
+      {bool listen = true}) {
+    // Attempt to get the provider element from the context.
     final provider = context
         .getElementForInheritedWidgetOfExactType<StatePulseProvider<T>>()
         ?.widget as StatePulseProvider<T>?;
 
+    // If no provider found, throw an error indicating that the store is missing from the widget tree.
     if (provider == null) {
-      throw FlutterError("StoreProvider<$T> not found in widget tree");
+      throw FlutterError(
+          "StatePulseProvider<$T> not found in the widget tree. Ensure that the provider is correctly wrapped in the widget tree.");
     }
 
+    // If listen is true, subscribe to the provider to rebuild the widget on changes.
+    if (listen) {
+      context.dependOnInheritedWidgetOfExactType<StatePulseProvider<T>>();
+    }
+
+    // Return the stored notifier (the instance of the provided store).
+    return provider.notifier!;
+  }
+
+  /// A static method that allows descendant widgets to directly access the store
+  /// without relying on a builder.
+  ///
+  /// - Returns the store (notifier) from the provider.
+  /// - Throws an error if no provider of the correct type is found in the widget tree.
+  static T value<T extends ChangeNotifier>(BuildContext context) {
+    // Attempt to get the provider element from the context.
+    final provider = context
+        .getElementForInheritedWidgetOfExactType<StatePulseProvider<T>>()
+        ?.widget as StatePulseProvider<T>?;
+
+    // If no provider found, throw an error indicating that the store is missing from the widget tree.
+    if (provider == null) {
+      throw FlutterError(
+          "StatePulseProvider<$T> not found in the widget tree. Ensure that the provider is correctly wrapped in the widget tree.");
+    }
+
+    // Return the stored notifier (the instance of the provided store).
     return provider.notifier!;
   }
 }

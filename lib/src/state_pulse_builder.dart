@@ -4,6 +4,7 @@ import 'package:state_pulse/src/state_pulse_provider.dart';
 
 class StatePulseBuilder<T extends ChangeNotifier> extends StatelessWidget {
   final Widget Function(BuildContext context, T store) builder;
+  final T? store;
 
   /// A builder widget that listens to a `ChangeNotifier` store and rebuilds
   /// the UI when the state changes. This is part of the StatePulse package.
@@ -17,15 +18,17 @@ class StatePulseBuilder<T extends ChangeNotifier> extends StatelessWidget {
   /// `StatePulseBuilder` listens to the `ChangeNotifier` store and triggers a
   /// rebuild of its child widget whenever the state changes. It uses `AnimatedBuilder`
   /// to smoothly update the UI.
-  const StatePulseBuilder({super.key, required this.builder});
+  const StatePulseBuilder({super.key, this.store, required this.builder});
 
   @override
   Widget build(BuildContext context) {
-    final store = StatePulseProvider.of<T>(context);
+    // Fetch the store, using local store if passed, otherwise using global provider with listen: false
+    final T actualStore =
+        store ?? StatePulseProvider.of<T>(context, listen: false);
 
     return AnimatedBuilder(
-      animation: store,
-      builder: (context, _) => builder(context, store),
+      animation: actualStore,
+      builder: (context, _) => builder(context, actualStore),
     );
   }
 }
