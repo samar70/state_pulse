@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/statepulse_logo.png" width="72"/>
+  <img src="https://raw.githubusercontent.com/samar70/state_pulse/c57198b3abdfee1c8bcca163210d130c74422497/assets/statepulse_logo.png" width="72"/>
 </p>
 
 <h1 align="center">StatePulse</h1>
