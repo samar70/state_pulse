@@ -1,3 +1,13 @@
+## 0.0.5
+
+- Added StatePulseSelector (fine-grained rebuilds)
+- Added StatePulseListener for side-effects
+- Added StatePulseConsumer (builder + listener)
+- Added local instance support in all widgets
+- Added official StatePulse logo + asset support
+- Improved documentation and examples
+- Minor optimizations & internal clean-ups
+
 ## 0.0.4
 
 - Added: StatePulseProvider.value method for directly accessing the store without rebuilding.
