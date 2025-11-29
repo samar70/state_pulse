@@ -1,3 +1,16 @@
+## 0.0.8
+
+- Cleaned up documentation for better maintainability.
+
+## 0.0.7
+
+- Refactor code.
+
+## 0.0.6
+
+- Refactored README for better clarity and better examples.
+- Improved internal consistency in documentation comments.
+
 ## 0.0.5
 
 - Added StatePulseSelector (fine-grained rebuilds)
