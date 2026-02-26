@@ -35,17 +35,17 @@ A lightweight, reactive, hydrated state-management library for Flutter — inspi
 
 ```yaml
 dependencies:
-  state_pulse: ^0.0.5
+  state_pulse: ^1.0.0
 ```
-
-## 🧩 Quick Start Example
 
 ---
 
-## Create a Store
+## 🔄 Migration Guide (0.0.8 → 1.0.0)
+
+### Before (0.0.8)
 
 ```dart
-   class CounterStore extends ChangeNotifier with HydratedStatePulse {
+class CounterStore extends ChangeNotifier with HydratedStatePulse {
   int value = 0;
 
   void increment() {
@@ -66,7 +66,72 @@ dependencies:
 }
 ```
 
-## Provide the Store
+### Now (1.0.0)
+
+### Breaking Change (1.0.0)
+
+1. Required initialization
+2. Store inheritance change
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // REQUIRED
+  await StatePulse.initialize(); // REQUIRED
+  runApp(MyApp());
+}
+```
+
+```dart
+class CounterStore extends HydratedStatePulse {
+  int value = 0;
+
+  void increment() {
+    value++;
+    notifyListeners();
+  }
+
+  @override
+  String get storageKey => 'counter_store';
+
+  @override
+  Map<String, dynamic> toJson() => {'value': value};
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    value = json['value'] ?? 0;
+  }
+}
+```
+
+---
+
+## 🧩 Quick Start Example
+
+### Create a Store
+
+```dart
+  class CounterStore extends HydratedStatePulse {
+  int value = 0;
+
+  void increment() {
+    value++;
+    notifyListeners();
+  }
+
+  @override
+  String get storageKey => 'counter_store';
+
+  @override
+  Map<String, dynamic> toJson() => {'value': value};
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    value = json['value'] ?? 0;
+  }
+}
+```
+
+### Provide the Store
 
 ```dart
    StatePulseProvider(
@@ -75,64 +140,64 @@ dependencies:
     );
 ```
 
-## Use With Builder
+### Use With Builder
 
 ```dart
-   StatePulseBuilder<CounterStore>(
-   builder: (_, store) => Text('${store.value}'),
-   );
+StatePulseBuilder<CounterStore>(
+      builder: (_, store) => Text('${store.value}'),
+    );
 ```
 
-## 🎯 Selector Example (High Performance Rebuilds)
+### 🎯 Selector Example (High Performance Rebuilds)
 
 Only rebuilds when the selected value changes.
 
 ```dart
 StatePulseSelector<CounterStore, int>(
-selector: (store) => store.value,
-builder: (_, value) => Text('$value'),
-);
+      selector: (store) => store.value,
+      builder: (_, value) => Text('$value'),
+    );
 ```
 
-## 👂 Listener Example (Side-effects — No UI Rebuild)
+### 👂 Listener Example (Side-effects — No UI Rebuild)
 
 ```dart
 StatePulseListener<CounterStore>(
-listener: (_, store) {
-if (store.value == 10) {
-print("Reached 10!");
-}
-},
-child: SomeWidget(),
-);
+      listener: (_, store) {
+        if (store.value == 10) {
+          print("Reached 10!");
+        }
+      },
+      child: SomeWidget(),
+    );
 ```
 
-## 🔀 Consumer Example (Listener + Builder)
+### 🔀 Consumer Example (Listener + Builder)
 
 ```dart
 StatePulseConsumer<CounterStore>(
-listener: (_, store) => print("Changed!"),
-builder: (_, store) => Text("${store.value}"),
-);
+      listener: (_, store) => print("Changed!"),
+      builder: (_, store) => Text("${store.value}"),
+    );
 ```
 
-## 🧪 Local Store Instance (Widget-Scoped State)
+### 🧪 Local Store Instance (Widget-Scoped State)
 
 Each widget has its own isolated store:
 
 ```dart
-final localStore = CounterStore();
+ final localStore = CounterStore();
 
-StatePulseBuilder<CounterStore>(
-store: localStore,
-builder: (\_, store) => Text("${store.value}"),
-);
+    return StatePulseBuilder<CounterStore>(
+      store: localStore,
+      builder: (_, store) => Text("${store.value}"),
+    );
 ```
 
-## 🔧 Advanced Example — Hydrated User Store
+### 🔧 Advanced Example — Hydrated User Store
 
 ```dart
-class UserStore extends ChangeNotifier with HydratedStatePulse {
+class UserStore extends HydratedStatePulse {
   UserModel? user;
   bool loading = false;
 

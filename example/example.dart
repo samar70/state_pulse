@@ -2,15 +2,18 @@
 //
 // Basic usage example of the StatePulse package.
 // This example shows:
+// ✔ Proper initialization (required in 1.0.0)
 // ✔ How to provide a store (StatePulseProvider)
-// ✔ How to listen to it (StatePulseBuilder)
-// ✔ How to persist state using HydratedStatePulse
-// ✔ A minimal Flutter counter app that hydrates automatically
+// ✔ How to rebuild UI (StatePulseBuilder)
+// ✔ Automatic persistence with HydratedStatePulse
 
 import 'package:flutter/material.dart';
 import 'package:state_pulse/state_pulse.dart';
 
-void main() {
+Future<void> main() async {
+  // Must be called before runApp()
+  WidgetsFlutterBinding.ensureInitialized(); // REQUIRED
+  await StatePulse.initialize(); // REQUIRED
   runApp(const MyApp());
 }
 
@@ -21,7 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StatePulseProvider(
-      // Provide the CounterStore so the entire app can access it.
       store: CounterStore(),
       child: MaterialApp(
         title: 'StatePulse Demo',
@@ -43,7 +45,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StatePulseBuilder<CounterStore>(
-      // Builder gives access to the store and rebuilds automatically on changes.
       builder: (context, store) {
         return Scaffold(
           appBar: AppBar(
@@ -55,7 +56,6 @@ class MyHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('You have pushed the button this many times:'),
-                // Store value updates automatically thanks to StatePulseBuilder.
                 Text(
                   '${store.value}',
                   style: Theme.of(context).textTheme.headlineMedium,
@@ -63,8 +63,6 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
           ),
-
-          // Increment button
           floatingActionButton: FloatingActionButton(
             onPressed: store.increment,
             tooltip: 'Increment',
@@ -76,27 +74,24 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-/// Example Store that uses HydratedStatePulse to persist state automatically.
-class CounterStore extends ChangeNotifier with HydratedStatePulse {
+/// Example Store using HydratedStatePulse.
+/// State automatically persists between app restarts.
+class CounterStore extends HydratedStatePulse {
   int value = 0;
 
-  /// Increments the counter and triggers UI updates.
   void increment() {
     value++;
     notifyListeners();
   }
 
-  /// Unique key for saving this store's data in SharedPreferences.
   @override
   String get storageKey => 'counter_store';
 
-  /// Convert store state to JSON for persistence.
   @override
   Map<String, dynamic> toJson() {
     return {"value": value};
   }
 
-  /// Restore store state from JSON.
   @override
   void fromJson(Map<String, dynamic> json) {
     value = json["value"] ?? 0;

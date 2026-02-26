@@ -1,6 +1,6 @@
 // src/state_pulse_builder.dart
 import 'package:flutter/material.dart';
-import 'package:state_pulse/src/state_pulse_provider.dart';
+import 'state_pulse_provider.dart';
 
 class StatePulseBuilder<T extends ChangeNotifier> extends StatelessWidget {
   final Widget Function(BuildContext context, T store) builder;

@@ -1,6 +1,6 @@
 // src/state_pulse_consumer.dart
 import 'package:flutter/material.dart';
-import 'package:state_pulse/src/state_pulse_provider.dart';
+import 'state_pulse_provider.dart';
 
 /// A widget that combines both `StatePulseBuilder` and `StatePulseListener`
 /// into a single, convenient API.

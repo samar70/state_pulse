@@ -1,6 +1,6 @@
 // src/state_pulse_listener.dart
 import 'package:flutter/material.dart';
-import 'package:state_pulse/src/state_pulse_provider.dart';
+import 'state_pulse_provider.dart';
 
 /// A widget that listens to a `ChangeNotifier` store from StatePulse
 /// and triggers a callback whenever the store updates.
@@ -74,6 +74,14 @@ class StatePulseListener<T extends ChangeNotifier> extends StatefulWidget {
 
   @override
   State<StatePulseListener<T>> createState() => _StatePulseListenerState<T>();
+  StatePulseListener<T> copyWith({required Widget child}) {
+    return StatePulseListener<T>(
+      key: key,
+      listener: listener,
+      store: store,
+      child: child,
+    );
+  }
 }
 
 class _StatePulseListenerState<T extends ChangeNotifier>

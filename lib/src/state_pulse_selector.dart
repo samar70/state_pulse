@@ -1,6 +1,6 @@
 // src/state_pulse_selector.dart
 import 'package:flutter/material.dart';
-import 'package:state_pulse/src/state_pulse_provider.dart';
+import 'state_pulse_provider.dart';
 
 /// {@template state_pulse_selector}
 /// A widget that rebuilds only when the selected part of the store changes,
