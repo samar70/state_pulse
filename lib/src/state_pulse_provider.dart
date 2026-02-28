@@ -11,8 +11,14 @@ class StatePulseProvider<T extends ChangeNotifier>
   /// the state that you want to manage. It must extend `ChangeNotifier`.
   /// - [store]: The instance of the `ChangeNotifier` store that holds your app's state.
   /// - [child]: The widget subtree that will have access to the store.
-  const StatePulseProvider({super.key, required T store, required super.child})
-      : super(notifier: store);
+  const StatePulseProvider({
+    super.key,
+    required T store,
+    Widget? child,
+  }) : super(
+          notifier: store,
+          child: child ?? const SizedBox(),
+        );
 
   /// A static method that allows descendant widgets to access the [store]
   /// using [BuildContext]. It searches the widget tree for the nearest
@@ -60,5 +66,35 @@ class StatePulseProvider<T extends ChangeNotifier>
 
     // Return the stored notifier (the instance of the provided store).
     return provider.notifier!;
+  }
+
+  /// Creates a copy of this [StatePulseProvider] with a new [child].
+  ///
+  /// This method is primarily used internally by higher-order widgets
+  /// such as `MultiStatePulseProvider` to compose multiple providers
+  /// without requiring deeply nested widget trees.
+  ///
+  /// It preserves:
+  /// - the original [store] (notifier)
+  /// - the [key]
+  ///
+  /// Only the [child] subtree is replaced.
+  ///
+  /// ---
+  /// Why this exists:
+  ///
+  /// Similar to how `MultiBlocProvider` works in flutter_bloc,
+  /// multiple providers are combined by wrapping them around
+  /// a single child widget. Instead of manually nesting providers,
+  /// this method allows safe structural cloning while keeping
+  /// the same store instance.
+  ///
+  /// This method is not typically used directly by application developers.
+  StatePulseProvider<T> copyWith({required Widget child}) {
+    return StatePulseProvider<T>(
+      key: key,
+      store: notifier!,
+      child: child,
+    );
   }
 }

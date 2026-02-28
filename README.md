@@ -35,7 +35,7 @@ A lightweight, reactive, hydrated state-management library for Flutter — inspi
 
 ```yaml
 dependencies:
-  state_pulse: ^1.0.0
+  state_pulse: ^1.1.0
 ```
 
 ---
@@ -66,12 +66,9 @@ class CounterStore extends ChangeNotifier with HydratedStatePulse {
 }
 ```
 
-### Now (1.0.0)
-
-### Breaking Change (1.0.0)
+### Now Breaking Change(1.0.0)
 
 1. Required initialization
-2. Store inheritance change
 
 ```dart
 void main() async {
@@ -80,6 +77,8 @@ void main() async {
   runApp(MyApp());
 }
 ```
+
+2. Store inheritance change
 
 ```dart
 class CounterStore extends HydratedStatePulse {

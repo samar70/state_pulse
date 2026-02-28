@@ -1,3 +1,13 @@
+## 1.1.0
+
+- Added `MultiStatePulseProvider` for providing multiple stores at once.
+
+- Added `MultiStatePulseListener` for listening to multiple stores in a single widget.
+
+- Introduced multi-instance persistence support via `id` override.
+
+- Added `storagePrefix` override for customizable and obfuscation-safe storage namespaces.
+
 ## 1.0.0
 
 - Fixed extra rebuild occurring on initial app launch.
@@ -9,8 +19,6 @@
 - Internal imports refactored to use proper local file references instead of package: paths.
 
 - Bumped `shared_preferences` dependency to `2.5.4`.
-
-- Improved and validated API documentation using `dart doc`.
 
 ## 0.0.8
 

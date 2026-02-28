@@ -11,7 +11,15 @@ abstract class HydratedStatePulse extends ChangeNotifier {
   }
 
   /// Unique key for storing state
-  String get storageKey;
+  String get storagePrefix => runtimeType.toString();
+
+  /// Override if you want multiple instances of same store type
+  String get id => '';
+
+  /// Final computed storage key
+  /// /// DO NOT override storageKey.
+  /// Override storagePrefix or id instead.
+  String get storageKey => '$storagePrefix$id';
 
   /// Convert state to JSON
   Map<String, dynamic> toJson();

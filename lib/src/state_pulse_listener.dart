@@ -57,7 +57,7 @@ class StatePulseListener<T extends ChangeNotifier> extends StatefulWidget {
   /// The widget below this listener in the widget tree.
   ///
   /// This widget **does not rebuild** when the store changes.
-  final Widget child;
+  final Widget? child;
 
   /// Optionally provide a local store instance.
   ///
@@ -68,12 +68,35 @@ class StatePulseListener<T extends ChangeNotifier> extends StatefulWidget {
   const StatePulseListener({
     super.key,
     required this.listener,
-    required this.child,
+    this.child,
     this.store,
   });
 
   @override
   State<StatePulseListener<T>> createState() => _StatePulseListenerState<T>();
+
+  /// Creates a copy of this [StatePulseListener] with a new [child].
+  ///
+  /// This is primarily used internally by higher-order widgets such as
+  /// `MultiStatePulseListener` to compose multiple listeners without
+  /// requiring deeply nested widget trees.
+  ///
+  /// It preserves:
+  /// - the original [listener] callback
+  /// - the optional [store] override
+  /// - the [key]
+  ///
+  /// Only the [child] is replaced.
+  ///
+  /// ---
+  /// Why this exists:
+  ///
+  /// Similar to how `MultiBlocListener` works in flutter_bloc,
+  /// listeners are combined by wrapping them around a single child.
+  /// To avoid manual nesting and type mismatch issues, this method
+  /// allows safe structural cloning while keeping configuration intact.
+  ///
+  /// This method is not typically used directly by app developers.
   StatePulseListener<T> copyWith({required Widget child}) {
     return StatePulseListener<T>(
       key: key,
@@ -114,6 +137,6 @@ class _StatePulseListenerState<T extends ChangeNotifier>
   @override
   Widget build(BuildContext context) {
     // No rebuilding required; simply return the child widget.
-    return widget.child;
+    return widget.child ?? const SizedBox();
   }
 }
