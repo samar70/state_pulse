@@ -1,6 +1,6 @@
 name: state_pulse
 description: Lightweight reactive & persistent state management for Flutter.
-version: 1.1.0
+version: 1.1.1
 homepage: https://github.com/samar70/state_pulse
 repository: https://github.com/samar70/state_pulse
 issue_tracker: https://github.com/samar70/state_pulse/issues
