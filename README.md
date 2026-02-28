@@ -54,9 +54,6 @@ class CounterStore extends ChangeNotifier with HydratedStatePulse {
   }
 
   @override
-  String get storageKey => 'counter_store';
-
-  @override
   Map<String, dynamic> toJson() => {'value': value};
 
   @override
@@ -90,9 +87,6 @@ class CounterStore extends HydratedStatePulse {
   }
 
   @override
-  String get storageKey => 'counter_store';
-
-  @override
   Map<String, dynamic> toJson() => {'value': value};
 
   @override
@@ -116,9 +110,6 @@ class CounterStore extends HydratedStatePulse {
     value++;
     notifyListeners();
   }
-
-  @override
-  String get storageKey => 'counter_store';
 
   @override
   Map<String, dynamic> toJson() => {'value': value};
@@ -208,9 +199,6 @@ class UserStore extends HydratedStatePulse {
     loading = false;
     notifyListeners();
   }
-
-  @override
-  String get storageKey => "user_store";
 
   @override
   Map<String, dynamic> toJson() => user == null ? {} : {"user": user!.toJson()};

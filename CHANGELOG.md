@@ -1,3 +1,11 @@
+## 1.1.1
+
+- Removed `storageKey` override from basic examples
+
+- Simplified beginner setup (no need to override storage key manually)
+
+- Updated example project to reflect new best practices
+
 ## 1.1.0
 
 - Added `MultiStatePulseProvider` for providing multiple stores at once.

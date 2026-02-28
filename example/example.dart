@@ -85,9 +85,6 @@ class CounterStore extends HydratedStatePulse {
   }
 
   @override
-  String get storageKey => 'counter_store';
-
-  @override
   Map<String, dynamic> toJson() {
     return {"value": value};
   }
